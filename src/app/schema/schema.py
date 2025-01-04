@@ -10,7 +10,7 @@ class E3dcConfig(BaseModel):
     e3dc_password: str
     e3dc_serial: str
     e3dc_config: dict[str, Any] = field(default_factory=dict)
-    pass_key: str
+    passkey: str
 
 
 class Production(BaseModel):
