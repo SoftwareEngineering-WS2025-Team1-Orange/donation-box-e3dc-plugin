@@ -6,20 +6,22 @@ from ..schema.schema import E3dcConfig
 
 class E3dcService:
     def __init__(self):
-        self.config = None
+        self.e3dc_obj = None
+
+    def _build_e3dc_obj(self, local_config: E3dcConfig):
+        self.e3dc_obj = E3DC(E3DC.CONNECT_WEB, username=local_config.e3dc_user, password=local_config.e3dc_password,
+                             serialNumber=local_config.e3dc_serial,
+                             isPasswordMd5=False,
+                             configuration=local_config.e3dc_config)
 
     def configure_service(self, config: E3dcConfig):
-        self.config = config
+        self._build_e3dc_obj(config)
 
     def poll(self, config: E3dcConfig | None):
-        local_config = config or self.config
+        if config:
+            self._build_e3dc_obj(config)
 
-        if not local_config:
+        if not self.e3dc_obj:
             raise HTTPException(status_code=400, detail="No config provided")
 
-        e3dc_obj = E3DC(E3DC.CONNECT_WEB, username=local_config.e3dc_user, password=local_config.e3dc_password,
-                        serialNumber=local_config.e3dc_serial,
-                        isPasswordMd5=False,
-                        configuration=local_config.e3dc_config)
-
-        return e3dc_obj.poll(keepAlive=True)
+        return self.e3dc_obj.poll(keepAlive=True)
