@@ -29,3 +29,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/e3dc"]
+
+[tool.ruff]
+exclude = ["src"]
