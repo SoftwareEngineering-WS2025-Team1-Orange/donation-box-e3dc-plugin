@@ -12,7 +12,7 @@ def load_config(pc_request: PasskeyConfigRequest) -> Response:
     try:
         e3dc_service.configure_service(pc_request.config)
         return Response(status_code=201)
-    except Exception as e:
+    except Exception:
         return Response(status_code=401)
 
 
