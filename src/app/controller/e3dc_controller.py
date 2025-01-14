@@ -13,8 +13,7 @@ def load_config(pc_request: PasskeyConfigRequest) -> Response:
         e3dc_service.configure_service(pc_request.config)
         return Response(status_code=201)
     except Exception:
-        return Response(status_code=401)
-
+        exit(401)
 
 @router.post("/poll", response_model=PollResponse, status_code=200)
 def poll(pc_request: PasskeyConfigRequest) -> PollResponse:
