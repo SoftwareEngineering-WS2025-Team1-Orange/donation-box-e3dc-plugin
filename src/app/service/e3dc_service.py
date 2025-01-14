@@ -17,6 +17,10 @@ class E3dcService:
     def configure_service(self, config: E3dcConfig):
         self._build_e3dc_obj(config)
 
+    def disconnect(self):
+        self.e3dc_obj = None
+
+
     def poll(self, config: E3dcConfig | None):
         if config:
             self._build_e3dc_obj(config)
